@@ -1,0 +1,14 @@
+{
+    "name": "razorflow/cloudconnect",
+    "description": "Connect to cloud services and build dashboards",
+    "authors": [
+        {
+            "name": "Anirudh Sanjeev",
+            "email": "anirudh@razorflow.com"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "nategood/httpful": "*"
+    }
+}
