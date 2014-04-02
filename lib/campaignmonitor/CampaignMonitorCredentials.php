@@ -10,3 +10,5 @@ class CampaignMonitorCredentials {
 		return $this->apiKey;
 	}
 }
+
+?>

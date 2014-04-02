@@ -11,9 +11,8 @@ class SubscriberCountKPI extends KPIComponent {
 		$apiKey = $this->credentials->getAPIKey ();
 
 		$uri = "https://api.createsend.com/api/v3.1/lists/$listId/stats.json";
-		$response = Request::get($uri)->authenticateWith($apiKey, 'x')->send();
-		$totalSubscribers = $response->TotalActiveSubscribers;
-
+		$response = Httpful\Request::get($uri)->authenticateWith($apiKey, 'x')->send();
+		$totalSubscribers = $response->body->TotalActiveSubscribers;
 		$this->setValue ($totalSubscribers);
 	}
 
@@ -22,3 +21,5 @@ class SubscriberCountKPI extends KPIComponent {
 		$this->listId = $listId;
 	}
 }
+
+?>

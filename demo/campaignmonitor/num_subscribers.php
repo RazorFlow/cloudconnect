@@ -15,7 +15,7 @@ class NumSubscribersDashboard extends StandaloneDashboard {
 		$scKPI = new SubscriberCountKPI ('sc');
 		$scKPI->setCredentialsObject ($cred);
 		$scKPI->setDimensions (4, 4);
-		$scKPI->setCaption ("number of subscirbers");
+		$scKPI->setCaption ("Number of Subscribers");
 		$scKPI->setListID ("550620f85f767592c498318ee04e6dd7");
 		$this->addComponent ($scKPI);
 	}
@@ -23,3 +23,5 @@ class NumSubscribersDashboard extends StandaloneDashboard {
 
 $db = new NumSubscribersDashboard ();
 $db->renderStandalone ();
+
+?>
