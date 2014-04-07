@@ -4,7 +4,7 @@ require "../../rfphp/razorflow.php";
 require "../../lib/jira/JiraCredentials.php";
 require "../../lib/jira/ProgressPieChart.php";
 require "../../lib/jira/DaysToRelease.php";
-require "../../lib/jira/IssuesCount.php";
+require "../../lib/jira/CustomJQL.php";
 require "../../vendor/autoload.php";
 
 class JiraProgressDashboard extends StandaloneDashboard {
@@ -29,12 +29,12 @@ class JiraProgressDashboard extends StandaloneDashboard {
     $DaysToRelease->setTimezone("Asia/Kolkata");
     $DaysToRelease->setURL("https://razorflow.atlassian.net/");
 
-    $issuesCount = new IssuesCount('ic');
+    $issuesCount = new CustomJQL('ic');
     $issuesCount->setCredentialsObject($cred);
     $issuesCount->setDimensions(4,4);
-    $issuesCount->setCaption("number of Issues");
-    $issuesCount->setProjectID("10000");
+    $issuesCount->setCaption("My Open Issues");
     $issuesCount->setURL("https://razorflow.atlassian.net/");
+    $issuesCount->setCustomJQL("project = RF AND resolution = Unresolved AND assignee in (selwyn) ORDER BY updatedDate DESC");
 
     $this->addComponent ($progPie);
     $this->addComponent ($DaysToRelease);

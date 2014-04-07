@@ -28,7 +28,7 @@ class daysToRelease extends KPIComponent {
     $userName = $this->credentials->getAdminUserName();
     $password = $this->credentials->getAdminPassword();
 
-    $uri = $this->JiraURL . "/rest/api/2/version/$versionID";
+    $uri = $this->JiraURL . "/rest/api/latest/version/$versionID";
     $response = Httpful\Request::get($uri)
                              ->authenticateWith($userName, $password)
                              ->send();

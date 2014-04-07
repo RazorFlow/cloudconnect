@@ -28,7 +28,7 @@ class ProgressPieChart extends ChartComponent {
     $userName = $this->credentials->getAdminUserName();
     $password = $this->credentials->getAdminPassword();
 
-    $baseURI= $this->JiraURL . "/rest/api/2/search?jql=project=$projectID";
+    $baseURI= $this->JiraURL . "/rest/api/latest/search?jql=project=$projectID";
     $uri =  $baseURI . $query;
     $response = Httpful\Request::get($uri)
                           ->authenticateWith($userName, $password)
