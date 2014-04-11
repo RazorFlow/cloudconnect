@@ -14,6 +14,8 @@ class OpenIncidentsKPI extends KPIComponent {
 		$response = Httpful\Request::get($uri)->authenticateWith('selwynjacob90@gmail.com', 'sXkFIJtG')
 											  ->addHeader('App-Key', '85i4kkl8nnn3w1r7uspukc2em0b2sfe0')
 											  ->send();
+
+		var_dump($response->body); die();
 		$this->setValue ('1');
 	}
 }

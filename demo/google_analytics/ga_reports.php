@@ -10,7 +10,7 @@ class GAReportsDashboard extends StandaloneDashboard {
     $this->setDashboardTitle("Google Analytics Dashboard");
 
     $cred = new GoogleAnalyticsCredentials();
-    $cred->setAccessToken ("ya29.1.AADtN_XrLY9fQPpJxnCS7I4y_Q3VV_cg-c3vrpSCyZVzjDGpQ-A9XkdWM2xzYs4");
+    $cred->setAccessToken ("ya29.1.AADtN_VQrJKdK6YhULHsDfnl0g9o9l2ooY1ZCHcf5BHsH96b6WW6ZUOMLJmKKV0");
 
     $statsKPI = new VisitorStatsKPI ('vs');
     $statsKPI->setCredentialsObject ($cred);
