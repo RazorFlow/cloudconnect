@@ -15,7 +15,6 @@ class OpenIncidentsKPI extends KPIComponent {
 											  ->addHeader('App-Key', '85i4kkl8nnn3w1r7uspukc2em0b2sfe0')
 											  ->send();
 
-		var_dump($response->body); die();
 		$this->setValue ('1');
 	}
 }
