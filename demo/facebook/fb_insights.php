@@ -3,6 +3,7 @@
 require "../../rfphp/razorflow.php";
 require "../../lib/facebook/FacebookCredentials.php";
 require "../../lib/facebook/PageLikesKPI.php";
+require "../../lib/facebook/PageAttritionRateKPI.php";
 require "../../vendor/autoload.php";
 
 class FBInsightsDashboard extends StandaloneDashboard {
@@ -10,7 +11,7 @@ class FBInsightsDashboard extends StandaloneDashboard {
     $this->setDashboardTitle ("RazorFlow Facebook Insights");
 
     $cred = new FacebookCredentials ();
-    $cred->setAccessToken ("CAACEdEose0cBAPgZCVZBpZAVn6hBeLFf2yITwBClR7kFU0KnZAyHMX3alwewxmwLNTWaBFqqqNS72kw0ynyskMgdW5HsZBzHIvulBdTEjhm6cEDme4ni4yQzI4wHn65y9jSGYVZAFyHxZBZAWHqW5W4abF6AuqbOmykmXhzthhcpD3ExCzDGTaa1tNQqlLpOh1AZD");
+    $cred->setAccessToken ("CAACEdEose0cBAAGEKTab8KvbYyLre8mTscL7f4ES0hMFmTDZCJ1L3Je3vRdxq3evBZB6ZBTLRM3btQXEkCvsyBvTJGWfkY1VfnzXGnrcnRqnDZCBQJj9dJjEHW8J6NfCE0Rp9DVHMF0ZCku2e7IsPYXrKjaKY6uVSeqAi8O5t1yDS8rd1o1yzzaxXGajhZBtIZD");
 
     $pageLikes = new PageLikesKPI ('pl');
     $pageLikes->setCredentialsObject ($cred);
@@ -18,7 +19,16 @@ class FBInsightsDashboard extends StandaloneDashboard {
     $pageLikes->setCaption ("Page Likes");
     $pageLikes->setPageID ("319090954847321");
 
+    $attrition = new PageAttritionRateKPI ('ar');
+    $attrition->setCredentialsObject ($cred);
+    $attrition->setDimensions (4,4);
+    $attrition->setCaption ("Weekly Attrition Rate");
+    $attrition->setPageID ("319090954847321");
+    $attrition->setPeriod ("week");
+    $attrition->setTimezone ("Asia/Kolkata");
+
     $this->addComponent ($pageLikes);
+    $this->addComponent ($attrition);
   }
 }
 
