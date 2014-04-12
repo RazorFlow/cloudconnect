@@ -1,13 +1,9 @@
 <?php
 
-class TwitterFollowingKPI extends KPIComponent {
+class TwitterMentionsKPI extends KPIComponent {
 	protected $credentials;
 	public function setCredentialsObject ($credentials) {
 		$this->credentials = $credentials;
-	}
-
-	public function setUsername($username) {
-		$this->username = $username;
 	}
 
 	public function initialize () {
@@ -17,12 +13,13 @@ class TwitterFollowingKPI extends KPIComponent {
 		$accessTokenSecret = $this->credentials->getAccessTokenSecret();
 
 		$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+	
 		if (!$twitter->authenticate()) {
 		    die('Invalid name or password');
 		}
 
-		$following = $twitter->following($this->username);
-		$count = count($following->ids);
+		$mentions = $twitter->mentions();
+		$count = count($mentions);
 		$this->setValue ($count);
 	}
 }
