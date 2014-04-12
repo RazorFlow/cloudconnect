@@ -4,6 +4,9 @@ require "../../rfphp/razorflow.php";
 require "../../lib/twitter/TwitterCredentials.php";
 require "../../lib/twitter/TwitterFollowersKPI.php";
 require "../../lib/twitter/TwitterFollowingKPI.php";
+require "../../lib/twitter/TwitterListedKPI.php";
+require "../../lib/twitter/TwitterRetweetedKPI.php";
+require "../../lib/twitter/TwitterMentionsKPI.php";
 require "../../vendor/autoload.php";
 
 class TwitterDashboard extends StandaloneDashboard {
@@ -30,6 +33,25 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tKPI->setCaption ("Following");
 		$tKPI->setUsername("selwynjacob90");
 		$this->addComponent ($tKPI);
+
+		$tlKPI = new TwitterListedKPI ('tl');
+		$tlKPI->setCredentialsObject ($cred);
+		$tlKPI->setDimensions (4, 4);
+		$tlKPI->setCaption ("Listed");
+		$tlKPI->setUsername("selwynjacob90");
+		$this->addComponent ($tlKPI);
+
+		$trKPI = new TwitterRetweetedKPI ('tr');
+		$trKPI->setCredentialsObject ($cred);
+		$trKPI->setDimensions (4, 4);
+		$trKPI->setCaption ("Retweeted");
+		$this->addComponent ($trKPI);
+
+		$tmKPI = new TwitterMentionsKPI ('tm');
+		$tmKPI->setCredentialsObject ($cred);
+		$tmKPI->setDimensions (4, 4);
+		$tmKPI->setCaption ("Mentions");
+		$this->addComponent ($tmKPI);
 	}
 }
 

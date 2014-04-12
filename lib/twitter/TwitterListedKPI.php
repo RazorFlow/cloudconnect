@@ -1,6 +1,6 @@
 <?php
 
-class TwitterFollowingKPI extends KPIComponent {
+class TwitterListedKPI extends KPIComponent {
 	protected $credentials;
 	public function setCredentialsObject ($credentials) {
 		$this->credentials = $credentials;
@@ -21,8 +21,8 @@ class TwitterFollowingKPI extends KPIComponent {
 		    die('Invalid name or password');
 		}
 
-		$following = $twitter->following($this->username);
-		$count = count($following->ids);
+		$listed = $twitter->listed($this->username);
+		$count = count($listed->lists);
 		$this->setValue ($count);
 	}
 }
