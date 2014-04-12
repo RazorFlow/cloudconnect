@@ -1,9 +1,31 @@
 <?php
 if(isset($_POST['clientID'])) {
 	// TODO: Do the hybridauth thingie
-	echo $_POST['clientID'];
-	echo $_POST['clientSecret'];
+	require_once("hybridauth/Hybrid/Auth.php");
+	$config = array(
+		"base_url" => "http://localhost:8080/hybridauth/",
+		"providers" => array (
+			"Google" => array (
+				"enabled" => true,
+				"keys" => array("id" => "471636057128.apps.googleusercontent.com", "secret" => "jYUHvUJbQKZMuM-8He451JI6"),
+				"access_type" => "offline"
+			)
+		)
+	);
 
+	$hybridauth = new Hybrid_Auth( $config );
+ 	$adapter = $hybridauth->authenticate( "Google" );
+ 	$access_token = $adapter->getAccessToken();
+
+ 	if($access_token) {
+ 		$access_token_str = $access_token["access_token"];
+ 		$done_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]?done=true&access_token=$access_token_str";
+ 		header('Location: '. $done_url);
+ 		die();
+ 	} else {
+ 		echo("Failed to Authenticate");
+ 		die();
+ 	}
 	
 }
 else if(isset($_GET['done'])) {
