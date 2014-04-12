@@ -10,6 +10,7 @@
     "minimum-stability": "beta",
     "require": {
         "nategood/httpful": "*",
-        "dg/twitter-php": "3.3"
+        "dg/twitter-php": "3.3",
+        "hybridauth/hybridauth": "dev-master"
     }
 }
