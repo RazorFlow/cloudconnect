@@ -5,16 +5,17 @@ if(isset($_POST['clientID'])) {
 	$config = array(
 		"base_url" => "http://localhost:8080/hybridauth/",
 		"providers" => array (
-			"Google" => array (
+			"Facebook" => array (
 				"enabled" => true,
 				"keys" => array("id" => $_POST['clientID'], "secret" => $_POST['clientSecret']),
-				"access_type" => "offline"
+				"scope" => "manage_pages"
 			)
 		)
 	);
 
 	$hybridauth = new Hybrid_Auth( $config );
- 	$adapter = $hybridauth->authenticate( "Google" );
+ 	$adapter = $hybridauth->authenticate( "Facebook" );
+
  	$access_token = $adapter->getAccessToken();
 
  	if($access_token) {
@@ -33,7 +34,7 @@ else if(isset($_GET['done'])) {
 <div class="container">
 	<div class="row">
 	<p>Copy and paste the following code to create a credentials object;
-	<pre>$cred = new GoogleAnalyticsCredentials();
+	<pre>$cred = new FacebookCredentials();
 $cred->setAccessToken ("<?php echo $_GET['access_token']; ?>);</pre>
 	</div>
 </div>
@@ -45,7 +46,7 @@ else {
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1>RazorFlow Bridge Helpers <small>Google Analytics</small></h1>
+			<h1>RazorFlow Bridge Helpers <small>Facebook</small></h1>
 		</div>
 	</div>
 	<div class="row">
@@ -67,17 +68,17 @@ else {
 		<div class="col-md-12">
 			<h3>Setup:</h3>
 			<p>Note: <b>No secret information about the client ID and email will be stored on the server. They're temporarily used to generate the access token</b></p>
-			<form class="form-horizontal" role="form" method="post" action="google_analytics.php">
+			<form class="form-horizontal" role="form" method="post" action="facebook.php">
 				<div class="form-group">
-					<label for="clientID" class="col-sm-2 control-label">Client ID</label>
+					<label for="clientID" class="col-sm-2 control-label">App ID</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="clientID" placeholder="Client ID" name="clientID">
+						<input type="text" class="form-control" id="clientID" placeholder="App ID" name="clientID">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="clientSecret" class="col-sm-2 control-label">Client Secret</label>
+					<label for="clientSecret" class="col-sm-2 control-label">App Secret</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="clientSecret" placeholder="Client Secret" name="clientSecret">
+						<input type="text" class="form-control" id="clientSecret" placeholder="App Secret" name="clientSecret">
 					</div>
 				</div>
 				<div class="form-group">
