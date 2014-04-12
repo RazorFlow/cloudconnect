@@ -6,6 +6,7 @@ require "../../lib/facebook/PageLikesKPI.php";
 require "../../lib/facebook/PageAttritionRateKPI.php";
 require "../../lib/facebook/PageGrowthRateKPI.php";
 require "../../lib/facebook/PageLikesSourcesChart.php";
+require "../../lib/facebook/PageGenderAgeChart.php";
 require "../../vendor/autoload.php";
 
 class FBInsightsDashboard extends StandaloneDashboard {
@@ -44,10 +45,17 @@ class FBInsightsDashboard extends StandaloneDashboard {
     $likesSources->setPageID ("319090954847321");
     $likesSources->setTimezone("Asia/Kolkata");
 
+/*    $ageGenderChart = new PageGenderAgeChart('ga');
+    $ageGenderChart->setCredentialsObject ($cred);
+    $ageGenderChart->setDimensions (4,4);
+    $ageGenderChart->setCaption ("Age-Gender Distribution");
+    $ageGenderChart->setPageID ("319090954847321");*/
+
     $this->addComponent ($pageLikes);
     $this->addComponent ($attrition);
     $this->addComponent ($growthRate);
     $this->addComponent ($likesSources);
+    //$this->addComponent ($ageGenderChart);
   }
 }
 
