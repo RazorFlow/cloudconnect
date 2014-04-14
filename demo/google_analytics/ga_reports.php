@@ -1,8 +1,9 @@
 <?php
 
 require "../../rfphp/razorflow.php";
-require "../../lib/google_analytics/GoogleAnalyticsCredentials.php";
-require "../../lib/google_analytics/VisitorStatsKPI.php";
+require "../../src/lib/google_analytics/GoogleAnalyticsCredentials.php";
+require "../../src/lib/google_analytics/VisitorStatsKPI.php";
+require "../../src/lib/google_analytics/BounceRateKPI.php";
 require "../../vendor/autoload.php";
 
 class GAReportsDashboard extends StandaloneDashboard {
@@ -10,15 +11,23 @@ class GAReportsDashboard extends StandaloneDashboard {
     $this->setDashboardTitle("Google Analytics Dashboard");
 
     $cred = new GoogleAnalyticsCredentials();
-    $cred->setAccessToken ("ya29.1.AADtN_VQrJKdK6YhULHsDfnl0g9o9l2ooY1ZCHcf5BHsH96b6WW6ZUOMLJmKKV0");
+    $cred->setAccessToken ("ya29.1.AADtN_X1pu-Vh4s_D9IQqbV9zlOBPJL_a9GIev3PbTVUZTxRbqgZoerWmNhbUaxGpa_V1g");
 
     $statsKPI = new VisitorStatsKPI ('vs');
     $statsKPI->setCredentialsObject ($cred);
-    $statsKPI->setDimensions (4,4);
+    $statsKPI->setDimensions (2,2);
     $statsKPI->setCaption ("Number of View this Week");
     $statsKPI->setViewID ("69481643");
     $statsKPI->setQuery("metrics=ga:visits&start-date=9daysAgo&end-date=today");
+
+    $bounceRate = new BounceRateKPI ('br');
+    $bounceRate->setCredentialsObject ($cred);
+    $bounceRate->setDimensions (2,2);
+    $bounceRate->setCaption ("Bounce Rate");
+    $bounceRate->setViewID("69481643");
+
     $this->addComponent ($statsKPI);
+    $this->addComponent ($bounceRate);
   }
 }
 
