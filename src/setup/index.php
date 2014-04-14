@@ -4,6 +4,7 @@
 	<p>
 		<ul>
 			<li><a href="google_analytics.php">Google Analytics</a></li>
+			<li><a href="twitter.php">Twitter Analytics</a></li>
 		</ul>
 	</p>
 </div>
