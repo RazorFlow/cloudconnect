@@ -6,6 +6,7 @@ require "../../src/lib/google_analytics/VisitorStatsKPI.php";
 require "../../src/lib/google_analytics/BounceRateKPI.php";
 require "../../src/lib/google_analytics/AverageTimeChart.php";
 require "../../src/lib/google_analytics/TopPagesTable.php";
+require "../../src/lib/google_analytics/TrafficSourcesTable.php";
 require "../../vendor/autoload.php";
 
 class GAReportsDashboard extends StandaloneDashboard {
@@ -13,7 +14,7 @@ class GAReportsDashboard extends StandaloneDashboard {
     $this->setDashboardTitle("Google Analytics Dashboard");
 
     $cred = new GoogleAnalyticsCredentials();
-    $cred->setAccessToken ("ya29.1.AADtN_X2_j4OlxBBLd1hH5kn3Enko4dEqCSut8fByRFJzxN7t465YY3XgKJiuQiQsdRq6w");
+    $cred->setAccessToken ("ya29.1.AADtN_Vfkx75VQB-q4viMSpBXWNvjFG4RZb4uGlT33ARbizTyMIt-Bdp8BltBSo");
 
     $statsKPI = new VisitorStatsKPI ('vs');
     $statsKPI->setCredentialsObject ($cred);
@@ -41,10 +42,18 @@ class GAReportsDashboard extends StandaloneDashboard {
     $topPages->setCaption("Top Pages");
     $topPages->setViewID("69481643");
 
+    $topSources = new TrafficSourcesTable ('ts');
+    $topSources->setCredentialsObject($cred);
+    $topSources->setDimensions(4,4);
+    $topSources->setCaption("Top Traffic Sources");
+    $topSources->setViewID("69481643");
+
     $this->addComponent ($avgTime);
     $this->addComponent ($topPages);
+    $this->addComponent ($topSources);
     $this->addComponent ($statsKPI);
     $this->addComponent ($bounceRate);
+    
  
 
   }
