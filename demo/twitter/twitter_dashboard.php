@@ -61,13 +61,13 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tmlList->addColumn('mentions', "");
 		$this->addComponent ($tmlList);
 
-/*		$trlList = new TwitterRetweetsList ('trl');
+		$trlList = new TwitterRetweetsList ('trl');
 		$trlList->setCredentialsObject ($cred);
 		$trlList->setDimensions (4, 4);
 		$trlList->setCaption ("Twitter Retweets");
 		$trlList->addColumn('retweets', "");
 		$this->addComponent ($trlList);
-*/
+
 	}
 }
 
