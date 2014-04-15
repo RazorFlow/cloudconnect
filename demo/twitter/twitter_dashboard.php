@@ -21,7 +21,7 @@ class TwitterDashboard extends StandaloneDashboard {
 		$cred->setAccessToken("733429656-xcATA7WmWHCYQnMxxdQskKgEqdMMDxSFzDy651P3");
 		$cred->setAccessTokenSecret("svxAGVSEwfY4MMq3lTJ3BPaUoKjmjsZQXf4qM7p4Vs");
 
-		$tfKPI = new TwitterFollowersKPI ('tf');
+/*		$tfKPI = new TwitterFollowersKPI ('tf');
 		$tfKPI->setCredentialsObject ($cred);
 		$tfKPI->setDimensions (2, 2);
 		$tfKPI->setCaption ("Followers");
@@ -52,7 +52,7 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tmKPI->setCredentialsObject ($cred);
 		$tmKPI->setDimensions (2, 2);
 		$tmKPI->setCaption ("Mentions");
-		$this->addComponent ($tmKPI);
+		$this->addComponent ($tmKPI);*/
 
 		$tmlList = new TwitterMentionsList ('tml');
 		$tmlList->setCredentialsObject ($cred);
@@ -61,13 +61,13 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tmlList->addColumn('mentions', "");
 		$this->addComponent ($tmlList);
 
-		$trlList = new TwitterRetweetsList ('trl');
+/*		$trlList = new TwitterRetweetsList ('trl');
 		$trlList->setCredentialsObject ($cred);
 		$trlList->setDimensions (4, 4);
 		$trlList->setCaption ("Twitter Retweets");
 		$trlList->addColumn('retweets', "");
 		$this->addComponent ($trlList);
-
+*/
 	}
 }
 
