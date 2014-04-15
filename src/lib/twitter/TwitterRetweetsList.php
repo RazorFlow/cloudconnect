@@ -1,6 +1,6 @@
 <?php
 
-class TwitterRetweetedKPI extends KPIComponent {
+class TwitterRetweetsList extends TableComponent {
 	protected $credentials;
 	public function setCredentialsObject ($credentials) {
 		$this->credentials = $credentials;
@@ -13,14 +13,18 @@ class TwitterRetweetedKPI extends KPIComponent {
 		$accessTokenSecret = $this->credentials->getAccessTokenSecret();
 
 		$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
-		
+	
 		if (!$twitter->authenticate()) {
 		    die('Invalid name or password');
 		}
 
-		$retweeted = $twitter->retweeted();
-		$count = count($retweeted);
-		$this->setValue ($count);
+		$retweets = $twitter->retweeted();
+		foreach ($retweets as &$retweet) {
+			$text = $retweet->text;
+			$retweetCount = $retweet->retweet_count;
+			$message = "<strong>".$text."</strong><br> Reweet Count: ".$retweetCount;
+		    $this->addRow (array("retweets" => $message));
+		}
 	}
 }
 

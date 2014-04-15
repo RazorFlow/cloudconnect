@@ -8,6 +8,7 @@ require "../../src/lib/twitter/TwitterListedKPI.php";
 require "../../src/lib/twitter/TwitterRetweetedKPI.php";
 require "../../src/lib/twitter/TwitterMentionsKPI.php";
 require "../../src/lib/twitter/TwitterMentionsList.php";
+require "../../src/lib/twitter/TwitterRetweetsList.php";
 require "../../vendor/autoload.php";
 
 class TwitterDashboard extends StandaloneDashboard {
@@ -22,34 +23,34 @@ class TwitterDashboard extends StandaloneDashboard {
 
 		$tfKPI = new TwitterFollowersKPI ('tf');
 		$tfKPI->setCredentialsObject ($cred);
-		$tfKPI->setDimensions (4, 4);
+		$tfKPI->setDimensions (2, 2);
 		$tfKPI->setCaption ("Followers");
 		$tfKPI->setUsername("godgeez");
 		$this->addComponent ($tfKPI);
 
 		$tKPI = new TwitterFollowingKPI ('t');
 		$tKPI->setCredentialsObject ($cred);
-		$tKPI->setDimensions (4, 4);
+		$tKPI->setDimensions (2, 2);
 		$tKPI->setCaption ("Following");
 		$tKPI->setUsername("godgeez");
 		$this->addComponent ($tKPI);
 
 		$tlKPI = new TwitterListedKPI ('tl');
 		$tlKPI->setCredentialsObject ($cred);
-		$tlKPI->setDimensions (4, 4);
+		$tlKPI->setDimensions (2, 2);
 		$tlKPI->setCaption ("Listed");
 		$tlKPI->setUsername("godgeez");
 		$this->addComponent ($tlKPI);
 
 		$trKPI = new TwitterRetweetedKPI ('tr');
 		$trKPI->setCredentialsObject ($cred);
-		$trKPI->setDimensions (4, 4);
+		$trKPI->setDimensions (2, 2);
 		$trKPI->setCaption ("Retweeted");
 		$this->addComponent ($trKPI);
 
 		$tmKPI = new TwitterMentionsKPI ('tm');
 		$tmKPI->setCredentialsObject ($cred);
-		$tmKPI->setDimensions (4, 4);
+		$tmKPI->setDimensions (2, 2);
 		$tmKPI->setCaption ("Mentions");
 		$this->addComponent ($tmKPI);
 
@@ -60,6 +61,12 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tmlList->addColumn('mentions', "");
 		$this->addComponent ($tmlList);
 
+		$trlList = new TwitterRetweetsList ('trl');
+		$trlList->setCredentialsObject ($cred);
+		$trlList->setDimensions (4, 4);
+		$trlList->setCaption ("Twitter Retweets");
+		$trlList->addColumn('retweets', "");
+		$this->addComponent ($trlList);
 
 	}
 }
