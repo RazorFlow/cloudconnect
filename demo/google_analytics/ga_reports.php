@@ -8,6 +8,7 @@ require "../../src/lib/google_analytics/AverageTimeChart.php";
 require "../../src/lib/google_analytics/TopPagesTable.php";
 require "../../src/lib/google_analytics/TrafficSourcesTable.php";
 require "../../src/lib/google_analytics/GoalCompletionsChart.php";
+require "../../src/lib/google_analytics/DailyUniqueVisitors.php";
 require "../../vendor/autoload.php";
 
 class GAReportsDashboard extends StandaloneDashboard {
@@ -15,7 +16,7 @@ class GAReportsDashboard extends StandaloneDashboard {
     $this->setDashboardTitle("Google Analytics Dashboard");
 
     $cred = new GoogleAnalyticsCredentials();
-    $cred->setAccessToken ("ya29.1.AADtN_VTH_pq-cjrELJ8VMWQ_kz61rod5dKWM4vwDm18h9J8ps7WQkW_jAi-Q3o");
+    $cred->setAccessToken ("ya29.1.AADtN_UtXv2wAdQB0JwtlxMECaYcaYzaOeVotjC18V68LVaB1--PODw_Rf1HXyiS");
 
     $statsKPI = new VisitorStatsKPI ('vs');
     $statsKPI->setCredentialsObject ($cred);
@@ -55,13 +56,20 @@ class GAReportsDashboard extends StandaloneDashboard {
     $goalsPie->setCaption("Goal Completions vs Abandons");
     $goalsPie->setViewID("69481643");    
 
+    $uniqueVisitors = new DailyUniqueVisitors ('uv');
+    $uniqueVisitors->setCredentialsObject($cred);
+    $uniqueVisitors->setDimensions(8,4);
+    $uniqueVisitors->setCaption("Daily Unique Visitors");
+    $uniqueVisitors->setTimezone("Asia/Kolkata");
+    $uniqueVisitors->setViewID("69481643");
+
     $this->addComponent ($avgTime);
     $this->addComponent ($topPages);
     $this->addComponent ($goalsPie);
     $this->addComponent ($statsKPI);
     $this->addComponent ($bounceRate);
     $this->addComponent ($topSources);
- 
+    $this->addComponent ($uniqueVisitors);
 
   }
 }
