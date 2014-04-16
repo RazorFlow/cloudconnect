@@ -2,6 +2,7 @@
 
 class TwitterMentionsList extends TableComponent {
 	protected $credentials;
+	
 	public function setCredentialsObject ($credentials) {
 		$this->credentials = $credentials;
 	}

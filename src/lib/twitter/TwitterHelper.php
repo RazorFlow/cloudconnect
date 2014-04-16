@@ -1,7 +1,7 @@
 <?php
 
 class TwitterHelper {
-	
+		
 	public function time_passed($timestamp){
 	    //type cast, current time, difference in timestamps
 	    $timestamp      = (int) $timestamp;

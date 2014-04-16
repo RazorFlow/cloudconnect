@@ -13,8 +13,6 @@ require "../../src/lib/twitter/TwitterKeywordList.php";
 require "../../src/lib/twitter/TwitterHelper.php";
 require "../../vendor/autoload.php";
 
-date_default_timezone_set('Asia/Kolkatta');
-
 class TwitterDashboard extends StandaloneDashboard {
 	public function buildDashboard () {
 		$this->setDashboardTitle ("Twitter");
@@ -75,7 +73,7 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tklList = new TwitterKeywordList ('tkl');
 		$tklList->setCredentialsObject ($cred);
 		$tklList->setDimensions (4, 4);
-		$tklList->setCaption ("Twitter  Keywords Search");
+		$tklList->setCaption ("Twitter Keywords Search");
 		$tklList->addColumn('searchList', "");
 		$tklList->query('@noradio');
 		$this->addComponent ($tklList);
