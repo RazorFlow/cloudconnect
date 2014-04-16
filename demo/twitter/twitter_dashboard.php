@@ -10,7 +10,10 @@ require "../../src/lib/twitter/TwitterMentionsKPI.php";
 require "../../src/lib/twitter/TwitterMentionsList.php";
 require "../../src/lib/twitter/TwitterRetweetsList.php";
 require "../../src/lib/twitter/TwitterKeywordList.php";
+require "../../src/lib/twitter/TwitterHelper.php";
 require "../../vendor/autoload.php";
+
+date_default_timezone_set('Asia/Kolkatta');
 
 class TwitterDashboard extends StandaloneDashboard {
 	public function buildDashboard () {
