@@ -9,6 +9,7 @@ require "../../src/lib/twitter/TwitterRetweetedKPI.php";
 require "../../src/lib/twitter/TwitterMentionsKPI.php";
 require "../../src/lib/twitter/TwitterMentionsList.php";
 require "../../src/lib/twitter/TwitterRetweetsList.php";
+require "../../src/lib/twitter/TwitterKeywordList.php";
 require "../../vendor/autoload.php";
 
 class TwitterDashboard extends StandaloneDashboard {
@@ -21,7 +22,7 @@ class TwitterDashboard extends StandaloneDashboard {
 		$cred->setAccessToken("733429656-xcATA7WmWHCYQnMxxdQskKgEqdMMDxSFzDy651P3");
 		$cred->setAccessTokenSecret("svxAGVSEwfY4MMq3lTJ3BPaUoKjmjsZQXf4qM7p4Vs");
 
-/*		$tfKPI = new TwitterFollowersKPI ('tf');
+		$tfKPI = new TwitterFollowersKPI ('tf');
 		$tfKPI->setCredentialsObject ($cred);
 		$tfKPI->setDimensions (2, 2);
 		$tfKPI->setCaption ("Followers");
@@ -52,7 +53,7 @@ class TwitterDashboard extends StandaloneDashboard {
 		$tmKPI->setCredentialsObject ($cred);
 		$tmKPI->setDimensions (2, 2);
 		$tmKPI->setCaption ("Mentions");
-		$this->addComponent ($tmKPI);*/
+		$this->addComponent ($tmKPI);
 
 		$tmlList = new TwitterMentionsList ('tml');
 		$tmlList->setCredentialsObject ($cred);
@@ -67,6 +68,14 @@ class TwitterDashboard extends StandaloneDashboard {
 		$trlList->setCaption ("Twitter Retweets");
 		$trlList->addColumn('retweets', "");
 		$this->addComponent ($trlList);
+
+		$tklList = new TwitterKeywordList ('tkl');
+		$tklList->setCredentialsObject ($cred);
+		$tklList->setDimensions (4, 4);
+		$tklList->setCaption ("Twitter  Keywords Search");
+		$tklList->addColumn('searchList', "");
+		$tklList->query('@noradio');
+		$this->addComponent ($tklList);
 
 	}
 }
