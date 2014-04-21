@@ -53,15 +53,19 @@ else {
 		<div class="col-md-12">
 			<h3>Instructions:</h3>
 			<ol>
-				<li>Step 1</li>
-				<li>Step 2</li>
+				<li>Visit <a href="https://developers.facebook.com/">Facebook Developer Page</a>.</li>
+				<li>Click on 'Create New App' or select an App, and skip to step 4 if you already have one.</li>
+				<li>Enter Display Name, Namespace, and select a Category.</li>
+				<li>Click on Settings from the sidebar, and select the Advanced tab.</li>
+				<li>Set Valid OAuth redirect URIs to 'http://path/to/razorflow/src/setup/hybridauth?hauth.done=Facebook', and click on save changes.</li>
+				<li>Click on Dashboard link in the sidebar, and paste App ID, App Secret into the form below"</li>
 			</ol>
 			<p>For more instructions visit <a href="#">This Link</a></p>
 
 			<h3>Values</h3>
 			<ol>
 
-				<li>Authorized Redirect URIs: <code><?php //TODO: Selwyn echo $_SERVER['REQUEST_URI']; ?>http://foo</code></li>
+				<li>Authorized Redirect URIs: <code><?php echo("http://$_SERVER[HTTP_HOST]/hybridauth?hauth.done=Facebook"); ?></code></li>
 		</div>
 	</div>
 	<div class="row">
