@@ -3,7 +3,7 @@ if(isset($_POST['clientID'])) {
 	// TODO: Do the hybridauth thingie
 	require_once("hybridauth/Hybrid/Auth.php");
 	$config = array(
-		"base_url" => "http://localhost:8080/hybridauth/",
+		"base_url" => "http://$_SERVER[HTTP_HOST]/hybridauth/",
 		"providers" => array (
 			"Google" => array (
 				"enabled" => true,
@@ -52,15 +52,24 @@ else {
 		<div class="col-md-12">
 			<h3>Instructions:</h3>
 			<ol>
-				<li>Step 1</li>
-				<li>Step 2</li>
+				<li>Visit <a href="https://console.developers.google.com/">Google Developer Console</a>. </li>
+				<li>Click on 'Create Project' or select a project, and skip to step 4 if you already have one.</li>
+				<li>Enter a name and ID for the project.</li>
+				<li>Click on APIs &amp; auth in the sidebar, and select APIs. Turn on the Analytics API.</li>
+				<li>Now click on credentials from the sidebar, and click on 'Create New Client ID'.</li>
+				 <ol>
+					<li>Set the Application type to 'Web Application'.</li>
+					<li>Set the Authorized JavaScript origins to 'http://path/to/razorflow/src/setup'.</li>
+					<li>Set the Authorized redirect URI to 'http://path/to/razorflow/src/setup/hybridauth?hauth.done=Google'.</li>
+				</ol>
+				<li>Copy your Client ID, Client Secret, and paste them in the form below.</li>
 			</ol>
 			<p>For more instructions visit <a href="#">This Link</a></p>
 
 			<h3>Values</h3>
 			<ol>
 
-				<li>Authorized Redirect URIs: <code><?php //TODO: Selwyn echo $_SERVER['REQUEST_URI']; ?>http://foo</code></li>
+				<li>Authorized Redirect URIs: <code><?php echo("http://$_SERVER[HTTP_HOST]/hybridauth?hauth.done=Google") ?></code></li>
 		</div>
 	</div>
 	<div class="row">
