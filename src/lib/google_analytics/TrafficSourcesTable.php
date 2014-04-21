@@ -4,13 +4,27 @@ class TrafficSourcesTable extends TableComponent {
   protected $credentials;
   protected $viewID;
 
+  /**
+  * This function sets your Google Analytics credentials for TrafficSourcesTable.
+  * @param Object $credentials GoogleAnalyticsCredentials object
+  */
   public function setCredentialsObject ($credentials) {
     $this->credentials = $credentials;
   }
 
+  /**
+   * Sets the ID of the View for which the data has to be pulled.
+   * To know the ID of the view you want, follow these steps
+   *   1) Click on Admin
+   *   2) Select the required view under the VIEW Column (which is the last column)
+   *   3) Click on view settings
+   *   4) Note down your View ID
+   * @param String $viewID
+   */
   public function setViewID ($viewID) {
     $this->viewID = $viewID;
   }
+
 
   public function initialize () {
     $access_token = $this->credentials->getAccessToken();
@@ -25,7 +39,11 @@ class TrafficSourcesTable extends TableComponent {
 
   }
 
-  public function setupChart ($dataRows) {
+  /**
+   * This function is to be used internally only.
+   * @param  Array $dataRows 
+   */
+  private function setupChart ($dataRows) {
     $rows = [];
     $this->addColumn("source", "Traffic Source");
     $this->addColumn("searches", "Searches");

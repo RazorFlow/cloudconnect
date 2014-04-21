@@ -5,14 +5,32 @@ class AverageTimeChart extends ChartComponent {
   protected $viewID;
   protected $timezone;
  
+
+  /**
+  * This function sets your Google Analytics credentials for AverageTimeChart.
+  * @param Object $credentials GoogleAnalyticsCredentials object
+  */
   public function setCredentialsObject ($credentials) {
     $this->credentials = $credentials;
   }
 
+  /**
+   * Sets the ID of the View for which the data has to be pulled.
+   * To know the ID of the view you want, follow these steps
+   *   1) Click on Admin
+   *   2) Select the required view under the VIEW Column (which is the last column)
+   *   3) Click on view settings
+   *   4) Note down your View ID
+   * @param String $viewID
+   */ 
   public function setViewID ($viewID) {
     $this->viewID = $viewID;
   }
 
+  /**
+   * Use this function to set your timezone for accurate results.
+   * @param String $timezone
+   */
   public function setTimezone ($timezone) {
     $this->timezone = $timezone;
   }
@@ -30,10 +48,10 @@ class AverageTimeChart extends ChartComponent {
   }
 
   /**
-   * In the order of the above query string, each row will be ordered
-   * this way, 0 -> timestamp, 1 -> timeOnSite, 2 -> vists  
+   * This function is to be used internally only.
+   * @param  Array $dataRows 
    */
-  public function setupChart ($dataRows) {
+  private function setupChart ($dataRows) {
     $labels = [];
     $avgTimeSeries = [];
     date_default_timezone_set($this->timezone);
