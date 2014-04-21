@@ -4,10 +4,24 @@ class PageGenderAgeChart extends ChartComponent {
   protected $credentials;
   protected $pageID;
 
+  /**
+  * This function sets your Facebook credentials for PageGenderAgeChart.
+  * @param Object $credentials FacebookCredentials object
+  */
   public function setCredentialsObject ($credentials) {
     $this->credentials = $credentials;
   }
 
+  /**
+   * Sets the ID of the page for which data should be pulled.
+   * Follow these steps to know your Facebook Page ID,
+   *   1) On the Page home, click on Edit Page 
+   *   2) Select Edit Settings
+   *   3) Click on Page Info tab
+   *   4) Scroll to the bottom and note down your Facebook Page ID
+   * 
+   * @param String $pageID
+   */
   public function setPageID ($pageID) {
     $this->pageID = $pageID;
   }
@@ -22,7 +36,10 @@ class PageGenderAgeChart extends ChartComponent {
     $this->setupChart($response);
   }
 
-  public function generateAgeRangesMap () {
+  /**
+   * This is an internal function.
+   */
+  private function generateAgeRangesMap () {
     $ageRanges = array("18-24" => 0);
     $start = 24;
     //no one lives more than this :P
@@ -34,7 +51,10 @@ class PageGenderAgeChart extends ChartComponent {
     return $ageRanges;
   }
 
-  public function setupChart($response) {
+  /**
+   * This is an internal function.
+   */
+  private function setupChart($response) {
     $values = $response->body->data[0]->values;
     $recentValuesObj = $values[count($values)-1];
     $recentValues = get_object_vars($recentValuesObj->value);
