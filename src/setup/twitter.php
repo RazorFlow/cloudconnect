@@ -60,15 +60,20 @@ else {
 		<div class="col-md-12">
 			<h3>Instructions:</h3>
 			<ol>
-				<li>Step 1</li>
-				<li>Step 2</li>
+				<li>Visit <a href="https://apps.twitter.com/">Twitter Developer Page</a>.</li>
+				<li>Click on 'Create New App' or select an App, and skip to step 6 if you already have one.</li>
+				<li>Enter Application Name, Description and your Website URL.</li>
+				<li>Set the Callback URL to 'http://path/to/razorflow/src/setup/hybridauth?hauth.done=Twitter'</li>
+				<li>Create the application.</li>
+				<li>Click on manage API Keys.</li>
+				<li>Paste the API Key and API Secret into the form below</li>
 			</ol>
 			<p>For more instructions visit <a href="#">This Link</a></p>
 
 			<h3>Values</h3>
 			<ol>
-
-				<li>Authorized Redirect URIs: <code><?php //TODO: Selwyn echo $_SERVER['REQUEST_URI']; ?>http://foo</code></li>
+				<li>Authorized Redirect URIs: <code><?php echo("http://$_SERVER[HTTP_HOST]/hybridauth?hauth.done=Twitter"); ?></code></li>
+			</ol>
 		</div>
 	</div>
 	<div class="row">

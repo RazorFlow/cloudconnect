@@ -17,12 +17,7 @@ class TwitterKeywordList extends TableComponent {
 
 	public function initialize () {
 		$TwitterHelper = new TwitterHelper();
-		$consumerKey = $this->credentials->getConsumerKey();
-		$consumerSecret = $this->credentials->getConsumerSecret();
-		$accessToken = $this->credentials->getAccessToken();
-		$accessTokenSecret = $this->credentials->getAccessTokenSecret();
-		
-		$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+		$twitter = $TwitterHelper->authenticate($this->credentials);
 	
 		if (!$twitter->authenticate()) {
 		    die('Invalid name or password');

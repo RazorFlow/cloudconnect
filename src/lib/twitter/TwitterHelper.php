@@ -1,7 +1,12 @@
 <?php
 
 class TwitterHelper {
-		
+
+	/**
+	 * Returns the time since the post was made.
+	 * @param  [date] $timestamp
+	 * @return [string]
+	 */
 	public function time_passed($timestamp){
 	    //type cast, current time, difference in timestamps
 	    $timestamp      = (int) $timestamp;
@@ -61,10 +66,27 @@ class TwitterHelper {
 	    }
 	}
 
+	/**
+	 * Internal function which creates UI for the Twitter List.
+	 * @param  [string] $profile_image
+	 * @param  [string] $name
+	 * @param  [string] $time
+	 * @param  [string] $text
+	 * @return [string]
+	 */
 	public function create_list_text($profile_image, $name, $time, $text){
 		$message = "<div class='row'><div style='display:inline-block;'><img src='".$profile_image. "'></div>";
 		$message .= "<div style='display:inline-block; vertical-align: top; padding-left: 2%; width:80%;'><strong>".$name."</strong><span style='float:right'>".$time."</span><br>".$text."</div></div>";
 		return $message;
+	}
+
+	public function authenticate($credentials){
+		$consumerKey = $credentials->getConsumerKey();
+		$consumerSecret = $credentials->getConsumerSecret();
+		$accessToken = $credentials->getAccessToken();
+		$accessTokenSecret = $credentials->getAccessTokenSecret();
+		$twitter = new Twitter($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
+		return $twitter;
 	}
 }
 
