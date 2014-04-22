@@ -10,7 +10,6 @@ require "../../src/lib/twitter/TwitterMentionsKPI.php";
 require "../../src/lib/twitter/TwitterMentionsList.php";
 require "../../src/lib/twitter/TwitterRetweetsList.php";
 require "../../src/lib/twitter/TwitterKeywordList.php";
-require "../../src/lib/twitter/TwitterHelper.php";
 require "../../vendor/autoload.php";
 
 class TwitterDashboard extends StandaloneDashboard {

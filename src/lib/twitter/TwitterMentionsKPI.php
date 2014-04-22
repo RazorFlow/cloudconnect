@@ -1,4 +1,5 @@
 <?php
+require_once("TwitterHelper.php");
 
 class TwitterMentionsKPI extends KPIComponent {
 	protected $credentials;

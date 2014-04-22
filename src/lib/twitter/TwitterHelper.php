@@ -80,6 +80,11 @@ class TwitterHelper {
 		return $message;
 	}
 
+	/**
+	 * Authenticate the component before fetching the required data.
+	 * @param  [object] $credentials
+	 * @return [object]
+	 */
 	public function authenticate($credentials){
 		$consumerKey = $credentials->getConsumerKey();
 		$consumerSecret = $credentials->getConsumerSecret();

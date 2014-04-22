@@ -1,4 +1,5 @@
 <?php
+require_once("TwitterHelper.php");
 
 class TwitterKeywordList extends TableComponent {
 	protected $credentials;

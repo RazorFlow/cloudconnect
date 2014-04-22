@@ -1,4 +1,5 @@
 <?php
+require_once("TwitterHelper.php");
 
 class TwitterFollowingKPI extends KPIComponent {
 	protected $credentials;
@@ -6,6 +7,10 @@ class TwitterFollowingKPI extends KPIComponent {
 		$this->credentials = $credentials;
 	}
 
+	/**
+	 * This function sets the username for whom the results will be retreived will be retrieved.
+	 * @param [string] $username
+	 */
 	public function setUsername($username) {
 		$this->username = $username;
 	}
@@ -13,7 +18,7 @@ class TwitterFollowingKPI extends KPIComponent {
 	public function initialize () {
 		$TwitterHelper = new TwitterHelper();
 		$twitter = $TwitterHelper->authenticate($this->credentials);
-		
+
 		if (!$twitter->authenticate()) {
 		    die('Invalid name or password');
 		}
