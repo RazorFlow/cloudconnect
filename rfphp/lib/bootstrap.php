@@ -5,6 +5,8 @@ if(file_exists(RF_FOLDER_ROOT."/config/config.php")) {
 }
 require "core/Dashboard.php";
 require "core/StandaloneDashboard.php";
+require "core/EmbeddedDashboard.php";
+require "core/TabbedDashboard.php";
 require "components/Component.php";
 require "components/KPIComponent.php";
 require "components/TableComponent.php";
@@ -14,6 +16,7 @@ require "core/PropertyBase.php";
 require "core/DataSource.php";
 require "core/Properties.php";
 require "core/RFAssert.php";
+require "core/RFError.php";
 require "util/RFUtil.php";
 require "util/ArrayUtils.php";
 

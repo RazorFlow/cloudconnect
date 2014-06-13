@@ -1,6 +1,6 @@
 <?php
 
-class DataSource {
+class RFDataSource {
     public function pushRow ($row) {
       $this->data []= $row;
       $this->patch ('pushRow', 0, $row);
@@ -40,5 +40,4 @@ class DataSource {
     }
 
     protected $data = array();
-
 } 

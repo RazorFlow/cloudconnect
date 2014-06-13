@@ -6,7 +6,7 @@
  * @param {String} $id     uniquely identifies the instance of this class   
  * @augments {Component}
  */
-class FilterComponent extends Component {
+class FilterComponent extends RFComponent {
 
   function __construct ($id) {
       parent::__construct ($id);
@@ -22,11 +22,13 @@ class FilterComponent extends Component {
     * @method addTextFilter
     * @param {String} $id            Id for this filter item used to retrieve the value
     * @param {String} $label         The label that is displayed in the form element for the user
+    * @param {Array} $options       The options as an associative array
     */
-  public function addTextFilter ($id, $label) {
+  public function addTextFilter ($id, $label, $options = array()) {
     $opts = array();
     $opts['type'] = 'text';
     $opts['label'] = $label;
+    $opts['options'] = $options;
 
     $this->props->addItemToList("filter.items", $id, $opts);
   }
@@ -59,7 +61,9 @@ class FilterComponent extends Component {
     */
   public function addMultiSelectFilter ($id, $label, $list, $options=array()) {
     $opts = array();
-    $options['defaultSelectedOptions'] = array();
+    if(!isset($options['defaultSelectedOptions'])) {
+      $options['defaultSelectedOptions'] = array();
+    }
     $opts['type'] = 'multiSelect';
     $opts['label'] = $label;
     $opts['list'] = $list;
@@ -106,12 +110,13 @@ class FilterComponent extends Component {
     * @param {String} $id           Unique id for this filter
     * @param {String} $label        The name displayed on the control
     * @param {Array} $values        The default values for the start and end numbers
+    * @param {Array} $options       Array of options
     */
-  public function addNumericRangeFilter ($id, $label, $values=array()) {
+  public function addNumericRangeFilter ($id, $label, $values, $options=array()) {
     $opts = array();
     $opts['type'] = 'numericRange';
     $opts['label'] = $label;
-    $opts['options'] = array('values' => $values);
+    $opts['options']['values'] = $values;
 
     $this->props->addItemToList("filter.items", $id, $opts);
   }
@@ -139,8 +144,27 @@ class FilterComponent extends Component {
     * @param {String} $func                      Function name to be executed on apply filter
     */
 
-  public function onApplyClick ($lockedComponents, $func){
-    $this->bindToEvent ("submit", $lockedComponents, $func);
+  public function onApplyClick ($lockedComponents, $func, $db){
+    $this->bindToEvent ("submit", $lockedComponents, $func, $db);
+  }
+
+  /**
+    * Get all the input values
+    * @method getAllInputValues
+    */
+
+  public function getAllInputValues() {
+    return $this->inputValues;
+  }
+
+  /**
+    * Get input value by id
+    * @method getInputValue
+    * @param {String} $id       The id of a specific filter item
+    */
+
+  public function getInputValue($id) {
+    return $this->inputValues[$id];
   }
 
   /**
@@ -152,8 +176,18 @@ class FilterComponent extends Component {
       return "FilterComponent";
   }
 
+  public function setInputValues($values) {
+    $this->inputValues = $values;
+  }
+
   protected function validate (){
+    if($this->isHidden()) {
+      return;
+    }
+    
     parent::validate();
   }
+
+  private $inputValues;
 
 } 

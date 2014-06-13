@@ -1,11 +1,13 @@
 <?php
 
 /**
- * Base Component Class
+ * Base Component Class containing functions shared across all components.
+ *
+ * **This is an abstract class. You cannot create instances of this.**
+ *
  * @class Component
- * @access private
  */
-abstract class Component {
+abstract class RFComponent {
 
     /**
      * Set the caption of this component which is the text displayed on top of the component
@@ -32,6 +34,64 @@ abstract class Component {
         ));
     }
 
+    /**
+     * Hides a component from the dashboard
+     * @method hideComponent
+     */
+    public function hideComponent() {
+        $this->props->setValue('core.isHidden', true);
+    }
+
+    /**
+     * Show a hidden component in a modal
+     * @method showAsModal
+     */
+    public function showAsModal() {
+        //TODO: This is a hack temporarily.
+        $this->setDimensions(4, 4);
+        $this->props->setValue('core.showModal', true);
+        $this->validate();
+    }
+
+    /**
+     * Add a simple Key Performance Indicator (KPI/Metric) attached to the
+     * bottom of the component. 
+     * 
+     * @method addComponentKPI
+     * @param {String} $id A unique ID to identify the component KPI
+     * @param {ComponentKPIProperties}  $options  The options as an Associative Array
+     */
+    public function addComponentKPI ($id, $options=array()) {
+      $this->props->addItemToList('kpis', $id, $options);
+    }
+
+    /**
+    * Updates the Component KPI
+    * @method updateComponentKPI
+    * 
+    * @param {String} $id       A unique ID to identify the component KPI. This has to be the same as the one used to add the component kpi
+    * @param {Array}  $options  Array with the new value to set
+    */
+    public function updateComponentKPI($id, $options=array()) {
+        $kpis = $this->props->getObjectAtPath('kpis');
+        $kpis[$id] = $this->parseKPIComponentOptions($options, $kpis[$id]);
+
+        $this->props->setObjectAtPath('kpis', $kpis);
+    }
+
+    /**
+    * Removes a Component KPI
+    * @method removeComponentKPI
+    * @param {String} $id       A unique ID to identify the component KPI. This has to be the same as the one used to add the component kpi
+    */
+    public function removeComponentKPI($id) {
+        $kpis = $this->props->getObjectAtPath('kpis');
+        unset($kpis[$id]);
+
+        $this->props->emptyList('kpis');
+        $this->props->setObjectAtPath('kpis', $kpis);
+    }
+
     protected $aspects = array();
 
     protected function provide ($aspectName) {
@@ -52,24 +112,36 @@ abstract class Component {
       ));
     }
 
-    public function bindToEvent ($eventName, $components, $target) {
+    public function bindToEvent ($eventName, $components, $target, $db) {
         $componentIds = array();
         foreach($components as $c) {
             $componentIds []= array('id' => $c->getID());
         }
 
+        $this->setDashboard($db);
+
+        $url_params = $this->getURLParams(array(
+            'action' => 'triggerAction',
+            'func' => $target
+        ));
+
         $eventProperties = array(
             'type' => $eventName,
             'affectedComponents' => $componentIds,
-            'url' => RFUtil::buildURL($this->getBasePath (), array('action' => 'triggerAction', 'func' => $target))
+            'url' => RFUtil::buildURL($this->getBasePath (), $this->getURLParams($url_params))
         );
 
         $this->props->pushItemToList("events", $eventProperties);
     }
 
-    public function getBasePath () {
-        return $_SERVER['REQUEST_URI'];
+    protected function createActionUrl ($actionName, $func) {
+        return RFUtil::buildURL($this->getBasePath (), array('action' => $actionName, 'func' => $func));
     }
+
+    public function getBasePath () {
+        return $this->containingDashboard->getBasePath();
+    }
+
 
     protected $id;
     /**
@@ -90,7 +162,7 @@ abstract class Component {
 
     function __construct($id) {
         $this->id = $id;
-        $this->data = new DataSource();
+        $this->data = new RFDataSource();
         $this->data->linkToComponent($this);
     }
 
@@ -154,8 +226,52 @@ abstract class Component {
         }
     }
 
+    public function getUpdatedDataJSON($data) {
+      return json_encode(
+        $this->updateData($data),
+        JSON_PRETTY_PRINT
+      );
+    }
+
+    public function setDashboard ($dashboard) {
+      $this->containingDashboard = $dashboard;
+    }
+
+    public function getDashboard () {
+      return $this->containingDashboard;
+    }
+
+    protected function isHidden() {
+        if($this->props->getValue('core.showModal')) {
+            return false;
+        }
+
+        return $this->props->getValue('core.isHidden');
+    }
+
+    private function getURLParams($params) {
+        $url_params = $params;
+        $url_params['dashboard'] = $this->containingDashboard->getID();
+        if($this->containingDashboard->getDebugMode()) {
+            $url_params['rfDebug'] = true;
+        }
+
+        return $url_params;
+    }
+    
+    private function parseKPIComponentOptions($options, $kpi) {
+        foreach($options as $key => $value) {
+            $kpi[$key] = $value;
+        }
+
+        return $kpi;
+    }
+
+
     public function initialize () {
         // DO nothing by default
     }
+
+    private $containingDashboard;
         
 }

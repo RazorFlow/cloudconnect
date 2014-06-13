@@ -9,5 +9,6 @@ global $_rfConfig;
 
 $_rfConfig = array(
   "staticRoot" => "{{webRoot}}",
+  "rfDebug" => false
 );
 

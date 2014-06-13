@@ -33,7 +33,24 @@ class ComponentProperties extends PropertyBase {
 			'core' => new ComponentCoreProperties(),
 			'events' => new PropertyList('ComponentEventProperties'),
 			'children' => new PropertyList('NullProperties'),
-			'data' => new ComponentDataProperties()
+			'data' => new ComponentDataProperties(),
+			'kpis' => new PropertyList('ComponentKPIProperties')
+		));
+	}
+}
+class ComponentKPIProperties extends DataColumnProperties {
+	public function init () {
+		parent::init ();
+		
+		$this->register (array(
+			'caption' => "",
+			'value' => 0,
+			'captioncolor' => null,
+			'valuecolor' => null,
+			'Width' => 2,
+			'activeFlag' => true,
+			'icon' => null,
+			'iconprops' => "{}"
 		));
 	}
 }
@@ -42,20 +59,11 @@ class ComponentDataProperties extends PropertyBase {
 		parent::init ();
 		
 		$this->register (array(
-
+			'sources' => new PropertyList('RemoteDataSourceProperties')
 		));
 	}
 }
-class TableDataProperties extends ComponentDataProperties {
-	public function init () {
-		parent::init ();
-		
-		$this->register (array(
-			'rowDataSource' => new RemoteDataSource()
-		));
-	}
-}
-class RemoteDataSource extends PropertyBase {
+class RemoteDataSourceProperties extends PropertyBase {
 	public function init () {
 		parent::init ();
 		
@@ -90,11 +98,25 @@ class ComponentCoreProperties extends PropertyBase {
 		
 		$this->register (array(
 			'caption' => "",
+			'icon' => null,
+			'iconprops' => null,
 			'absolutePosition' => false,
 			'dimensions' => new ComponentDimensionProperties(),
 			'isChild' => false,
 			'location' => new ComponentLocationProperties(),
-			'zoomable' => true
+			'zoomable' => true,
+			'breadCrumbs' => new PropertyList('BreadCrumbProperties'),
+			'isHidden' => false,
+			'showModal' => false
+		));
+	}
+}
+class BreadCrumbProperties extends PropertyBase {
+	public function init () {
+		parent::init ();
+		
+		$this->register (array(
+			'url' => null
 		));
 	}
 }
@@ -156,7 +178,10 @@ class KPIDisplayProperties extends DataColumnProperties {
 			'ranges' => new PropertyList('RFRangeProperties'),
 			'maximum' => null,
 			'minimum' => null,
-			'type' => null
+			'type' => null,
+			'icon' => null,
+			'iconprops' => null,
+			'valueTextColor' => "auto"
 		));
 	}
 }
@@ -187,6 +212,8 @@ class ChartProperties extends PropertyBase {
 		$this->register (array(
 			'series' => new PropertyList('ChartSeriesProperties'),
 			'yaxis' => new ChartAxisProperties(),
+			'secondaryYAxis' => new ChartAxisProperties(),
+			'dualY' => false,
 			'showLegendFlag' => true
 		));
 	}
@@ -196,11 +223,9 @@ class ChartAxisProperties extends DataColumnProperties {
 		parent::init ();
 		
 		$this->register (array(
+			'id' => "primary",
 			'dataType' => "number",
-			'axisName' => "",
-			'minValue' => null,
-			'maxValue' => null,
-			'adaptiveMinimumValueFlag' => false
+			'axisName' => ""
 		));
 	}
 }
@@ -214,7 +239,9 @@ class ChartSeriesProperties extends DataColumnProperties {
 			'seriesDisplayType' => "column",
 			'seriesColor' => "auto",
 			'seriesHiddenFlag' => false,
-			'includeInLegendFlag' => true
+			'includeInLegendFlag' => true,
+			'seriesStacked' => false,
+			'yAxis' => "primary"
 		));
 	}
 }
@@ -245,8 +272,7 @@ class TableComponentProperties extends ComponentProperties {
 		parent::init ();
 		
 		$this->register (array(
-			'table' => new TableProperties(),
-			'data' => new TableDataProperties()
+			'table' => new TableProperties()
 		));
 	}
 }
@@ -258,9 +284,7 @@ class TableProperties extends PropertyBase {
 			'columns' => new PropertyList('TableColumnProperties'),
 			'rowsPerPage' => 10,
 			'currentPageNumber' => 0,
-			'serverPaginationFlag' => false,
-			'useRemoteDataSourceFlag' => false,
-			'detailViewFlag' => false
+			'totalRows' => 0
 		));
 	}
 }
@@ -272,10 +296,13 @@ class TableColumnProperties extends DataColumnProperties {
 			'name' => "",
 			'columnType' => "text",
 			'sortable' => false,
-			'sortActiveFlag' => false,
-			'sortDirection' => "descending",
-			'cellWidth' => null,
-			'hideColumnOnSmallDevices' => false
+			'columnWidth' => null,
+			'textAlign' => null,
+			'textBoldFlag' => false,
+			'textItalicFlag' => false,
+			'rawHTML' => false,
+			'subCaption' => false,
+			'subCaptionUnits' => null
 		));
 	}
 }

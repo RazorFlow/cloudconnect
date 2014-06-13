@@ -1,8 +1,8 @@
 <?php
 abstract class StandaloneDashboard extends Dashboard {
 
-    public function __construct(){
-      parent::__construct();
+    public function __construct($id=null){
+      parent::__construct($id);
     }
 
     public function renderStandalone() {

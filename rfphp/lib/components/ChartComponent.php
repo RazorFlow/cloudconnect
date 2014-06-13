@@ -5,7 +5,7 @@
  * @class ChartComponent
  * @augments {Component}
  */
-class ChartComponent extends Component {
+class ChartComponent extends RFComponent {
 	public function __construct ($id) {
         parent::__construct ($id);
 
@@ -65,6 +65,10 @@ class ChartComponent extends Component {
 	}
 
     protected function validate () {
+        if($this->isHidden()) {
+            return;
+        }
+        
         parent::validate();
         $this->requireAspects (array(
             'series' => "Please add a series using addSeries",
@@ -84,19 +88,43 @@ class ChartComponent extends Component {
     }
 
     /**
+     * Configure the Y-Axis of the chart
+     * @method addYAxis
+     * @param {String} $id        The unique id of this axis  
+     * @param {String} $name      The name of the y axis
+     * @param {Array}  $options   Options array. See the guide for available options
+     */
+    public function addYAxis ($id, $name, $options = array()) {
+        $options['id'] = $id;
+        $options['axisName'] = $name;
+        $this->props->setObjectAtPath('chart.secondaryYAxis', $options);
+        $this->props->setValue('chart.dualY', true);
+    }
+
+    /**
     * Attach a handler for the event when a chart plot item is clicked
     * @method onItemClick
     * @param {Array} $lockedComponents           Components to be locked
     * @param {String} $func                      Function name to be executed on item click
     */
 
-    public function onItemClick ($lockedComponents, $func){
-      $this->bindToEvent ("itemClick", $lockedComponents, $func);
+    public function onItemClick ($lockedComponents, $func, $db){
+      $this->bindToEvent ("itemClick", $lockedComponents, $func, $db);
     }
 
+    /**
+    * Clears all the data in the chart. Use this function if you want to update the chart with new data and labels. Be sure to lock the component before
+    * @method clearChart
+    */
     public function clearChart () {
         $this->data->clearRows ();
         $this->props->emptyList ("chart.series");
+    }
+
+    public function addDrillStep ($func) {
+        $this->props->pushItemToList("core.breadCrumbs", array (
+            'url' => $this->createActionUrl ("handleBreadCrumbs", $func)
+        ));
     }
 
     /**

@@ -6,7 +6,7 @@
  * @param {String} $id     Uniquely identifies the instance of this class   
  * @augments {Component}
  */
-class TableComponent extends Component {
+class TableComponent extends RFComponent {
     function __construct($id) {
         parent::__construct ($id);
 
@@ -21,11 +21,19 @@ class TableComponent extends Component {
      * @method addColumn
      * @param {String} $id           A unique id for this column which also corrresponds to the keys of row array
      * @param {String} $name         The name of the column which is displayed in the table
+     * @param {String} $opts         Array of options
      */
     public function addColumn ($id, $name, $opts=array()) {
         $this->provide('column');
         $opts['name'] = $name;
         $this->props->addItemToList("table.columns", $id, $opts);
+    }
+
+    public function addSparkColumn ($id, $name, $opts=array()) {
+      $opts['name'] = $name;
+      $opts['columnType'] = "spark";
+      $opts['rawHTML'] = true;
+      $this->props->addItemToList("table.columns", $id, $opts);
     }
 
     /**
@@ -58,12 +66,23 @@ class TableComponent extends Component {
       }
     }
 
+    public function setNumberOfRows ($count) {
+      $this->props->setValue('table.totalRows', $count);
+    }
+
     /**
      * Clears all the rows in the table.
      * @method clearRows        
      */
     public function clearRows(){
       $this->data->clearRows();
+    }
+
+    public function setRowDataSource ($dsFunc, $db) {
+        $this->setDashboard($db);
+        $this->props->addItemToList("data.sources", "tableRowDataSource", array(
+            'url' => RFUtil::buildURL($this->getBasePath (), array('action' => 'getData', 'func' => $dsFunc, 'component' => $this->getID()))
+        ));
     }
 
     /**
@@ -75,7 +94,15 @@ class TableComponent extends Component {
         return "TableComponent";
     }
 
+    public function updateData($data) {
+      return $data;
+    }
+
     protected function validate (){
+      if($this->isHidden()) {
+        return;
+      }
+      
       parent::validate();
       $this->requireAspects (array(
         "column" => "Please provide atleast one column using addColumn"

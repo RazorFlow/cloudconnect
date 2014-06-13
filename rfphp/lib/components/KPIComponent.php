@@ -5,7 +5,7 @@
  * @class KPIComponent
  * @augments {Component}
  */
-class KPIComponent extends Component {
+class KPIComponent extends RFComponent {
     public function __construct ($id) {
         parent::__construct ($id);
 
@@ -61,6 +61,10 @@ class KPIComponent extends Component {
     }
 
     protected function validate () {
+        if($this->isHidden()) {
+            return;
+        }
+
         parent::validate();
         $this->requireAspects (array(
             'value' => "Please add a value usig setValue",
